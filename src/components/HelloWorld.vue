@@ -17,8 +17,8 @@ export default {
       try {
         response = await Http.get({
           url: url,
-          connectTimeout: 1000,
-          readTimeout: 1000
+          connectTimeout: 10000,
+          readTimeout: 10000
         })
       } catch(e) {
         response = {
@@ -29,9 +29,9 @@ export default {
     }
 
     onMounted(async() => {
-      await callHttp('http://httpstat.us/200?sleep=1000')
-      await callHttp('http://httpstat.us/200?sleep=15000')
-      await callHttp('http://thisendpointdoesnotexist.com')
+      await callHttp('https://httpstat.us/200?sleep=1000')
+      await callHttp('https://httpstat.us/200?sleep=15000')
+      await callHttp('https://thisendpointdoesnotexist.com')
     })
   }
 }
