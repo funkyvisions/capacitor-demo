@@ -4,28 +4,35 @@
 
 <script>
 
-import { Http } from '@capacitor-community/http'
+// import { Http } from '@capacitor-community/http'
 import {onMounted} from "vue"
+import { HTTP } from '@ionic-native/http'
 
 export default {
 
   setup() {
 
     async function callHttp(url) {
-      alert(`Calling ${url}`)
-      let response
-      try {
-        response = await Http.get({
-          url: url,
-          connectTimeout: 10000,
-          readTimeout: 10000
-        })
-      } catch(e) {
-        response = {
-          message: e.message
+      return new Promise((resolve) => {
+        alert(`Calling ${url}`)
+        // let response
+        try {
+          HTTP.setRequestTimeout(5)
+          HTTP.sendRequest(url, { method: 'get', timeout: 5 },(a) => {
+            alert("success " + JSON.stringify(a))
+            resolve(a)
+          }, (a) => {
+            alert("failure " + JSON.stringify(a))
+            resolve(a)
+          })
+        } catch(e) {
+          alert("error " + e.message)
+          // response = {
+          //   message: e.message
+          // }
         }
-      }
-      alert(JSON.stringify(response))
+        // alert(JSON.stringify(response))
+      })
     }
 
     onMounted(async() => {
